@@ -1,4 +1,1 @@
-vsys
-====
-
-vsys
+Kochab Group distributed systems odyssey.
