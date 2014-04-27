@@ -24,7 +24,7 @@ public final class Car implements Runnable {
     
     @Override
     public String toString() {
-        return super.toString() + 
+        return "Car" + 
                "{id=" + id + 
                ",startDelay=" + startDelay + 
                ",parkTime=" + parkTime +
