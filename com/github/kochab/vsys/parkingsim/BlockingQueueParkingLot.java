@@ -21,5 +21,10 @@ public class BlockingQueueParkingLot implements ParkingLot {
     @Override
     public int remainingCapacity() { return q.remainingCapacity(); }
     
+    @Override
+    public String toString() {
+        return "ParkingLot{Capacity=" + remainingCapacity() + "}";
+    }
+    
     private final BlockingQueue<Car> q;
 }
