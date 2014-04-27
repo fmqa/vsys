@@ -12,11 +12,20 @@ public final class Car implements Runnable {
     public void run() {
         try {
             Thread.sleep(startDelay);
-            System.out.println(this + " is parking [" + System.currentTimeMillis() + "]");
-            parkingLot.park(this);
-            Thread.sleep(parkTime);
-            parkingLot.unpark(this);
-            System.out.println(this + " is leaving [" + System.currentTimeMillis() + "]");
+            if (parkingLot.remainingCapacity() > 0) {
+                System.out.println(this + " is parking [" + System.currentTimeMillis() + "]");
+                parkingLot.park(this);
+                Thread.sleep(parkTime);
+                parkingLot.unpark(this);
+                System.out.println(this + " is leaving [" + System.currentTimeMillis() + "]");
+            } else {
+                System.out.println(
+                    this + 
+                    " left after failing to find a parking space [" + 
+                    System.currentTimeMillis() + 
+                    "]"
+                );
+            }
         } catch (InterruptedException e) {
             System.err.println(this + " has been interrupted!");
         }
