@@ -9,21 +9,27 @@ public class BlockingQueueParkingLot implements ParkingLot {
     }
     
     @Override
-    public void park(Car c) throws InterruptedException { 
-        q.put(c); 
+    public void park(Car c) { 
+        if (!q.offer(c)) {
+            throw new IllegalStateException();
+        }
     }
     
     @Override
     public void unpark(Car c) { 
-        q.remove(c); 
+        if (!q.remove(c)) {
+            throw new IllegalStateException();
+        }
     }
     
     @Override
-    public int remainingCapacity() { return q.remainingCapacity(); }
+    public int remainingCapacity() { 
+        return q.remainingCapacity(); 
+    }
     
     @Override
     public String toString() {
-        return "ParkingLot{Capacity=" + remainingCapacity() + "}";
+        return "BlockingQueueParkingLot{Capacity=" + remainingCapacity() + "}";
     }
     
     private final BlockingQueue<Car> q;
