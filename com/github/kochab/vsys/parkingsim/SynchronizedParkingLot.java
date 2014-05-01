@@ -3,7 +3,7 @@ package com.github.kochab.vsys.parkingsim;
 import java.util.ArrayList;
 
 public class SynchronizedParkingLot implements ParkingLot {
-    public SynchronizedParkingLot (int cap) {
+    public SynchronizedParkingLot(int cap) {
         capacity = cap;
         cars = new ArrayList<Car>(cap);
     }
