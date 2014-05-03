@@ -2,6 +2,12 @@ package com.github.kochab.vsys.parkingsim;
 
 import java.util.ArrayList;
 
+/**
+ * A Parking-Lot implementation using synchronized methods.
+ * 
+ * @author Eugen Kinder
+ */
+
 public class SynchronizedParkingLot implements ParkingLot {
     public SynchronizedParkingLot(int cap) {
         capacity = cap;

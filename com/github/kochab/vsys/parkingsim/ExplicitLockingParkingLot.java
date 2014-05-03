@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * A parking implementation using Java >=5.0 concurrency primitives
+ *
+ * @author Fadi Moukayed
+ */
+
 public class ExplicitLockingParkingLot implements ParkingLot {
     public ExplicitLockingParkingLot(int cap) {
         capacity = cap;

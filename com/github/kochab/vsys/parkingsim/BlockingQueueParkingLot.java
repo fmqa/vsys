@@ -3,6 +3,12 @@ package com.github.kochab.vsys.parkingsim;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ArrayBlockingQueue;
 
+/**
+ * A parking lot implementation that delegates its operations to a BlockinQueue.
+ * 
+ * @author Matthias Siegmund
+ */
+
 public class BlockingQueueParkingLot implements ParkingLot {
     public BlockingQueueParkingLot(int capacity) {
         q = new ArrayBlockingQueue<Car>(capacity);

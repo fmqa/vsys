@@ -1,6 +1,18 @@
 package com.github.kochab.vsys.parkingsim;
 
+/**
+ * A class representing a Car object.
+ * 
+ * @author Eugen Kinder
+ * @author Matthias Siegmund
+ * @author Fadi Moukayed
+ */
+
 public final class Car implements Runnable {
+    /**
+     * Constructs a Car with the given id, start-up delay, parking time, 
+     * and an associated parking lot.
+     */
     public Car(String id, int startDelay, int parkTime, ParkingLot parkingLot) {
         this.id = id;
         this.startDelay = startDelay;

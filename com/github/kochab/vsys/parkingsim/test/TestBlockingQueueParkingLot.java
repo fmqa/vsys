@@ -9,6 +9,13 @@ import com.github.kochab.vsys.parkingsim.BlockingQueueParkingLot;
 import com.github.kochab.vsys.parkingsim.Car;
 import com.github.kochab.vsys.parkingsim.CarFactory;
 
+/**
+ * Test-Cases for the Blocking-Queue based parking lot implementation
+ * 
+ * @author Fadi Moukayed
+ * @author Matthias Siegmund
+ */
+
 @RunWith(JUnit4.class)
 public class TestBlockingQueueParkingLot {
     private static final long EPSILON = 5;

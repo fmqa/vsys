@@ -9,6 +9,13 @@ import com.github.kochab.vsys.parkingsim.ExplicitLockingParkingLot;
 import com.github.kochab.vsys.parkingsim.Car;
 import com.github.kochab.vsys.parkingsim.CarFactory;
 
+/**
+ * Test-Cases for the Java >= 5.0 locks-based parking lot implementation
+ * 
+ * @author Fadi Moukayed
+ */
+
+
 @RunWith(JUnit4.class)
 public class TestExplicitLockingParkingLot {
     private static final long EPSILON = 5;

@@ -3,11 +3,21 @@ package com.github.kochab.vsys.parkingsim;
 import java.util.Random;
 import java.util.ArrayList;
 
+/**
+ * Simple Parking simulation demonstrating Java's basic concurreny
+ * primitives.
+ * 
+ * @author Eugen Kinder
+ * @author Matthias Siegmund
+ * @author Fadi Moukayed
+ */
+
 final class Demo {
     private Demo() {
     }
     
     public static void main(String[] args) {
+        // Default number of parking lots
         int numParkingLots = 3;
         
         if (args.length == 1) {
@@ -25,6 +35,7 @@ final class Demo {
         
         ArrayList<ParkingLot> pLots = new ArrayList<ParkingLot>(numParkingLots);
         
+        // Pick random implementations for the different parking lots
         Random r = new Random();
         for (int i = 0; i < numParkingLots; ++i) {
             switch (r.nextInt(3)) {

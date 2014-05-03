@@ -9,6 +9,14 @@ import com.github.kochab.vsys.parkingsim.SynchronizedParkingLot;
 import com.github.kochab.vsys.parkingsim.Car;
 import com.github.kochab.vsys.parkingsim.CarFactory;
 
+/**
+ * Test-Cases for the synchronized parking lot implementation
+ * 
+ * @author Fadi Moukayed
+ * @author Eugen Kinder
+ */
+
+
 @RunWith(JUnit4.class)
 public class TestSynchronizedParkingLot {
     private static final long EPSILON = 5;
