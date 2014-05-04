@@ -17,7 +17,7 @@ public class SynchronizedParkingLot implements ParkingLot {
     @Override
     public synchronized void park(Car c) {
         if (cars.size() >= capacity) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("Attempt to park in full parking lot");
         }
         cars.add(c);
     }
@@ -25,7 +25,7 @@ public class SynchronizedParkingLot implements ParkingLot {
     @Override
     public synchronized void unpark(Car c) {
         if (!cars.remove(c)) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("Unparking of non-parked car");
         }
     }
     

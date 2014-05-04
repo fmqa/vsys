@@ -17,14 +17,14 @@ public class BlockingQueueParkingLot implements ParkingLot {
     @Override
     public void park(Car c) { 
         if (!q.offer(c)) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("Attempt to park in full parking lot");
         }
     }
     
     @Override
     public void unpark(Car c) { 
         if (!q.remove(c)) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("Unparking of non-parked car");
         }
     }
     

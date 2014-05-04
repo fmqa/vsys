@@ -21,7 +21,7 @@ public class ExplicitLockingParkingLot implements ParkingLot {
         lock.lock();
         try {
             if (cars.size() >= capacity) {
-                throw new IllegalStateException();
+                throw new IllegalStateException("Attempt to park in full parking lot");
             }
             cars.add(c);
         } finally {
@@ -34,7 +34,7 @@ public class ExplicitLockingParkingLot implements ParkingLot {
         lock.lock();
         try {
             if (!cars.remove(c)) {
-                throw new IllegalStateException();
+                throw new IllegalStateException("Unparking of non-parked car");
             }
         } finally {
             lock.unlock();
