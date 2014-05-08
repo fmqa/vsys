@@ -70,7 +70,9 @@ private:
                         std::sprintf(&response[0], "%s\n", "Unknown command");
                     }
                     
-                    asio::async_write(socket, asio::buffer(&response[0], response.size()),
+                    asio::async_write(socket, 
+                                      asio::buffer(&response[0], 
+                                                   std::strlen(&response[0])),
                         [this, self](std::error_code ec, std::size_t) {
                             if (!ec) { do_read(); }
                         }

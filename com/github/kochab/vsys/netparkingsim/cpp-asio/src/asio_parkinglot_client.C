@@ -18,6 +18,9 @@ static std::array<const char *, 4> commands = {
     "free", "in", "out", "quit"
 };
 
+static std::array<const char *, 4> commands_nl = {
+    "free\n", "in\n", "out\n", "quit\n"
+};
                      
 static void dispatch(asio::io_service &ios,
                      int ci, 
@@ -25,19 +28,19 @@ static void dispatch(asio::io_service &ios,
 {
     tcp::socket s(ios);
     asio::connect(s, it);
-    asio::write(s, asio::buffer(commands[ci], strlen(commands[ci])));
+    asio::write(s, asio::buffer(commands_nl[ci], strlen(commands_nl[ci])));
     
     if (ci == 3) {
         std::exit(EXIT_SUCCESS);
     }
     
-    std::array<char, 32> response;
-    asio::read(s, asio::buffer(response));
+    asio::streambuf buffer;
+    asio::read_until(s, buffer, "\n");
     std::cout << "<[" << s.remote_endpoint().address()
                     << ':' 
                     << s.remote_endpoint().port()
                     << "] " 
-                    << &response[0];
+                    << asio::buffer_cast<const char*>(buffer.data());
 }
 
 static void dispatch(asio::io_service &ios,
@@ -49,7 +52,7 @@ static void dispatch(asio::io_service &ios,
         for (tcp::resolver::iterator it : eps) {
             tcp::socket s(ios);
             asio::connect(s, it);
-            asio::write(s, asio::buffer(commands[ci], strlen(commands[ci])));
+            asio::write(s, asio::buffer(commands_nl[ci], strlen(commands_nl[ci])));
         }
         std::exit(EXIT_SUCCESS);
     }
@@ -57,17 +60,19 @@ static void dispatch(asio::io_service &ios,
     for (tcp::resolver::iterator it : eps) {
         tcp::socket s(ios);
         asio::connect(s, it);
-        asio::write(s, asio::buffer(commands[ci], strlen(commands[ci])));
+        asio::write(s, asio::buffer(commands_nl[ci], strlen(commands_nl[ci])));
         
-        std::array<char, 32> response;
-        asio::read(s, asio::buffer(response));
+        asio::streambuf buffer;
+        asio::read_until(s, buffer, "\n");
         std::cout << "<[" << s.remote_endpoint().address()
                         << ':' 
                         << s.remote_endpoint().port()
                         << "] " 
-                        << &response[0];
+                        << asio::buffer_cast<const char *>(buffer.data());
         // Stop at first success
-        if (std::memcmp(&response[0], "ok", 2) == 0) {
+        if (std::memcmp(asio::buffer_cast<const char *>(buffer.data()), 
+                                                        "ok", 2) == 0) 
+        {
             break;
         }
     }
