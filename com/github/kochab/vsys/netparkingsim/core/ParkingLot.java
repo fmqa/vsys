@@ -1,4 +1,4 @@
-package com.github.kochab.vsys.netparkingsim;
+package com.github.kochab.vsys.netparkingsim.core;
 
 public interface ParkingLot {
     boolean park();

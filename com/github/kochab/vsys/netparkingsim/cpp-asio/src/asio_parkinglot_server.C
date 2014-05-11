@@ -23,66 +23,55 @@ public:
       plot(&p) {}
     void start() { do_read(); }
 private:
+    void log_req(const char *r) {
+        std::cout << "Received '" << r << "' request from: "
+                  << socket.remote_endpoint().address()
+                  << ":"
+                  << socket.remote_endpoint().port()
+                  << std::endl;
+    }
+    
     void do_read() {
         auto self = shared_from_this();
 
-        socket.async_read_some(
-            asio::buffer(query),
+        asio::async_read_until(
+            socket,
+            request,
+            "\n",
             [this, self](std::error_code ec, std::size_t length) {
                 if (!ec) {
-                    response.fill(0);
-                    if (std::memcmp(&query[0], "free", 4) == 0) {
-                        std::cout << "'free' requested by: " 
-                                  << socket.remote_endpoint()
-                                           .address()
-                                           .to_string()
-                                  << std::endl;
-                        std::sprintf(&response[0], "%d\n", plot->remaining());
-                    } else if (std::memcmp(&query[0], "in", 2) == 0) {
-                        std::cout << "'in' requested by: " 
-                                  << socket.remote_endpoint()
-                                           .address()
-                                           .to_string()
-                                  << std::endl;
-                        std::sprintf(&response[0], 
-                                     "%s\n", plot->park() ? "ok" : "fail");
-                    } else if (std::memcmp(&query[0], "out", 3) == 0) {
-                        std::cout << "'out' requested by: " 
-                                  << socket.remote_endpoint()
-                                           .address()
-                                           .to_string()
-                                  << std::endl;
-                        std::sprintf(&response[0], 
-                                     "%s\n", plot->unpark() ? "ok" : "fail");
-                    } else if (std::memcmp(&query[0], "quit", 4) == 0) {
-                        std::cout << "'quit' requested by: " 
-                                  << socket.remote_endpoint()
-                                           .address()
-                                           .to_string()
-                                  << std::endl;
-                        std::exit (EXIT_SUCCESS);
+                    asio::streambuf response;
+                    std::ostream osresponse(&response);
+                    
+                    if (std::strncmp(asio::buffer_cast<const char *>(request.data()), "free", 4) == 0) {
+                        log_req("free");
+                        osresponse << plot->remaining() << std::endl;
+                    } else if (std::strncmp(asio::buffer_cast<const char *>(request.data()), "in", 2) == 0) {
+                        log_req("in");
+                        osresponse << (plot->park() ? "ok" : "fail") << std::endl;
+                    } else if (std::strncmp(asio::buffer_cast<const char *>(request.data()), "out", 3) == 0) {
+                        log_req("out");
+                        osresponse << (plot->unpark() ? "ok" : "fail") << std::endl;
+                    } else if (std::strncmp(asio::buffer_cast<const char *>(request.data()), "quit", 4) == 0) {
+                        log_req("quit");
+                        osresponse << "ok" << std::endl;
+                        socket.send(response.data());
+                        std::exit(EXIT_SUCCESS);
                     } else {
-                        std::cout << "Unknown command requested by: " 
-                                  << socket.remote_endpoint()
-                                           .address()
-                                           .to_string()
-                                  << std::endl;
-                        std::sprintf(&response[0], "%s\n", "Unknown command");
+                        log_req("Unknown");
+                        osresponse << "Unknown command: "
+                                   << asio::buffer_cast<const char*>(request.data())
+                                   << std::endl;
                     }
                     
-                    asio::async_write(socket, 
-                                      asio::buffer(&response[0], 
-                                                   std::strlen(&response[0])),
-                        [this, self](std::error_code ec, std::size_t) {
-                            if (!ec) { do_read(); }
-                        }
-                    );
+                    request.commit(request.size());
+                    socket.send(response.data());
                 }
             }
         );
     }
     
-    std::array<char, 32> query, response;
+    asio::streambuf request;
     tcp::socket socket;
     vsys::atomic_parking_lot *plot;
 };

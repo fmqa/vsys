@@ -1,7 +1,12 @@
 package com.github.kochab.vsys.netparkingsim;
 
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.io.IOException;
+import com.github.kochab.vsys.netparkingsim.core.SynchronizedParkingLot;
+import com.github.kochab.vsys.netparkingsim.server.RequestLoggingObserver;
+import com.github.kochab.vsys.netparkingsim.server.SessionBuilder;
+import com.github.kochab.vsys.netparkingsim.server.StandardSessionBuilder;
 
 class ParkingLotServerMain {
     private ParkingLotServerMain() {
@@ -26,27 +31,33 @@ class ParkingLotServerMain {
             }
         }
         
-        ParkingLot pLot = new SynchronizedParkingLot(n);
+        SessionBuilder sessionBuilder = new StandardSessionBuilder();
         
         ServerSocket ssock = null;
         try {
-            try {
-                ssock = new ServerSocket(Integer.valueOf(args[0]));
-            } catch (NumberFormatException e) {
-                System.err.println("Invalid port number: " + args[0]);
-            }
-            
-            try {
-                for (;;) {
-                    (new Thread(new ParkingLotServer(ssock.accept(), pLot))).start();
-                }
-            } catch (IOException e) {
-                System.err.println("Couldn't accept incoming connection.");
-                System.exit(1);
-            }
+            ssock = new ServerSocket(Integer.valueOf(args[0]));
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid port number: " + args[0]);
         } catch (IOException e) {
             System.err.println("Listen failed on port: " + args[0]);
             System.exit(1);
+        }
+        
+        sessionBuilder.setParkingLot(new SynchronizedParkingLot(n));
+        
+        try {
+            for (;;) {
+                Socket csock = ssock.accept();
+                sessionBuilder.setObserver(new RequestLoggingObserver(
+                    csock.getInetAddress(),
+                    csock.getPort(),
+                    System.out));
+                sessionBuilder.setClientSocket(csock);
+                (new Thread(sessionBuilder.createSession())).start();
+            }
+        } catch (IOException e) {
+            System.err.println("Couldn't accept incoming connection.");
+            System.exit(1);        
         } finally {
             try {
                 ssock.close();

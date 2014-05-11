@@ -1,4 +1,4 @@
-package com.github.kochab.vsys.netparkingsim;
+package com.github.kochab.vsys.netparkingsim.core;
 
 public class SynchronizedParkingLot implements ParkingLot {
     public SynchronizedParkingLot(int capacity) {
