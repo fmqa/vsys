@@ -8,6 +8,14 @@ import com.github.kochab.vsys.netparkingsim.server.RequestLoggingObserver;
 import com.github.kochab.vsys.netparkingsim.server.SessionBuilder;
 import com.github.kochab.vsys.netparkingsim.server.StandardSessionBuilder;
 
+/**
+ * Parking lot server implementation.
+ *
+ * @author Fadi Moukayed
+ * @author Matthias Siegmund
+ * @author Eugen Kinder
+ */
+
 class ParkingLotServerMain {
     private ParkingLotServerMain() {
     }

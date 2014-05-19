@@ -3,6 +3,14 @@ package com.github.kochab.vsys.netparkingsim.server;
 import java.net.Socket;
 import com.github.kochab.vsys.netparkingsim.core.ParkingLot;
 
+/**
+ * A server session builder.
+ *
+ * @author Fadi Moukayed
+ * @author Eugen Kinder
+ *
+ */
+
 public class StandardSessionBuilder implements SessionBuilder {
     @Override
     public Session createSession() {

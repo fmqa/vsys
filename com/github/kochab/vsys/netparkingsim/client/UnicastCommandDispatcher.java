@@ -6,7 +6,20 @@ import java.io.PrintWriter;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+/**
+ * A command dispatchers that sends commands to a single endpoint.
+ *
+ * @author Fadi Moukayed
+ * @author Matthias Siegmund
+ */
+
 public class UnicastCommandDispatcher implements CommandDispatcher {
+    /**
+     * Creates a command dispatcher for the given endpoint.
+     *
+     * @param addr Endpoint address
+     * @param port Endpoint port
+     */
     public UnicastCommandDispatcher(InetAddress addr, int port) {
         this.addr = addr;
         this.port = port;

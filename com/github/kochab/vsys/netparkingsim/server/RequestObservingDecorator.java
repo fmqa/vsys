@@ -3,7 +3,17 @@ package com.github.kochab.vsys.netparkingsim.server;
 import java.io.OutputStream;
 import java.io.IOException;
 
+/**
+ * Decorates a request handler with a given request observer.
+ *
+ * @author Fadi Moukayed
+ *
+ */
+
 public class RequestObservingDecorator implements RequestHandler {
+    /**
+     * Decorates the given request handler with the given observer.
+     */
     public RequestObservingDecorator(RequestHandler handler, RequestObserver observer) {
         this.handler = handler;
         this.observer = observer;

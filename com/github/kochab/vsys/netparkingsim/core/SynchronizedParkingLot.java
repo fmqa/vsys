@@ -1,5 +1,11 @@
 package com.github.kochab.vsys.netparkingsim.core;
 
+/**
+ * A Parking-Lot implementation using synchronized methods.
+ * 
+ * @author Eugen Kinder
+ */
+
 public class SynchronizedParkingLot implements ParkingLot {
     public SynchronizedParkingLot(int capacity) {
         this.capacity = capacity;

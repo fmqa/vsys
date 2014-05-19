@@ -6,9 +6,24 @@ import java.util.StringTokenizer;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+/**
+ * Utility methods for command dispatchers.
+ *
+ * @author Fadi Moukayed
+ * @author Matthias Siegmund
+ *
+ */
+
 public final class CommandDispatchers {
     private CommandDispatchers() {}
     
+    /**
+     * For the given IP:PORT endpoints, construct command dispatchers that
+     * will dispatch commands to given endpoints.
+     *
+     * @param pairs An iterable object containing host descriptors in the form of IP:PORT
+     * @return Command dispatchers for the given endpoints
+     */
     public static List<CommandDispatcher> 
     createUnicastDispatchers(Iterable<String> pairs) throws UnknownHostException {
         ArrayList<CommandDispatcher> displ = new ArrayList<CommandDispatcher>();

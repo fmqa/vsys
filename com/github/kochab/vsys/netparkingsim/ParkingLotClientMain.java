@@ -10,6 +10,17 @@ import java.net.UnknownHostException;
 import com.github.kochab.vsys.netparkingsim.client.CommandDispatcher;
 import com.github.kochab.vsys.netparkingsim.client.CommandDispatchers;
 
+/**
+ * Simple Parking Client.
+ *
+ * This client just echoes commands to endpoints and prints the response.
+ *
+ * @author Fadi Moukayed
+ * @author Matthias Siegmund
+ * @author Eugen Kinder
+ *
+ */
+
 class ParkingLotClientMain {
     private ParkingLotClientMain() {
     }

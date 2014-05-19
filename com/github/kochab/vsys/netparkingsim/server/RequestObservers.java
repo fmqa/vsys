@@ -1,6 +1,16 @@
 package com.github.kochab.vsys.netparkingsim.server;
 
+/**
+ * Predefinied request observers.
+ *
+ * @author Eugen Kinder
+ *
+ */
+
 public enum RequestObservers implements RequestObserver {
+    /**
+     * No-Op request observer.
+     */
     NULL {
         @Override
         public void onFree() {}

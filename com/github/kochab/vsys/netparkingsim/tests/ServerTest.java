@@ -16,8 +16,19 @@ import com.github.kochab.vsys.netparkingsim.core.SynchronizedParkingLot;
 import com.github.kochab.vsys.netparkingsim.server.RequestDispatcher;
 import com.github.kochab.vsys.netparkingsim.server.ParkingLotRequestHandler;
 
+/**
+ * Tests for core server functionality.
+ *
+ * @author Matthias Siegmund
+ * @author Eugen Kinder
+ *
+ */
+
 @RunWith(JUnit4.class)
 public class ServerTest {
+    /**
+     * Test the parking functionality.
+     */
     @Test
     public void parkTest() throws IOException, UnsupportedEncodingException {
         SynchronizedParkingLot spl = new SynchronizedParkingLot(1);
@@ -31,6 +42,9 @@ public class ServerTest {
         assertTrue(os.toString("UTF-8").equals("ok\n"));
     }
     
+    /**
+     * Test the unparking functionality.
+     */
     @Test
     public void unparkTest() throws IOException, UnsupportedEncodingException {
         SynchronizedParkingLot spl = new SynchronizedParkingLot(1);
@@ -45,6 +59,9 @@ public class ServerTest {
         assertTrue(os.toString("UTF-8").equals("ok\nok\n"));
     }
     
+    /**
+     * Test an invalid unparking operation.
+     */
     @Test
     public void illegalUnparkTest() throws IOException, UnsupportedEncodingException {
         SynchronizedParkingLot spl = new SynchronizedParkingLot(1);
@@ -60,6 +77,9 @@ public class ServerTest {
         assertTrue(os.toString("UTF-8").equals("ok\nok\nfail\n"));
     }
     
+    /**
+     * Test an invalid parking operation.
+     */
     @Test
     public void illegalParkTest() throws IOException, UnsupportedEncodingException {
         SynchronizedParkingLot spl = new SynchronizedParkingLot(1);

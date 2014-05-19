@@ -3,7 +3,22 @@ package com.github.kochab.vsys.netparkingsim.server;
 import java.net.InetAddress;
 import java.io.PrintStream;
 
+/**
+ * A request observer that logs requests to a given stream.
+ *
+ *
+ * @author Eugen Kinder
+ *
+ */
+
 public class RequestLoggingObserver implements RequestObserver {
+    /**
+     * Construct a new logging observer.
+     *
+     * @param clientAddr The client (request source's) address
+     * @param clientPort This session's communication port
+     * @param log The stream to log requests to
+     */
     public RequestLoggingObserver(InetAddress clientAddr, int clientPort, PrintStream log) {
         this.clientAddr = clientAddr;
         this.clientPort = clientPort;
